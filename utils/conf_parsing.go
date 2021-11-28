@@ -1,4 +1,4 @@
-package utils
+package conf_parsing
 
 import (
 	"encoding/json"
@@ -23,7 +23,7 @@ type DatabaseConfig struct {
 }
 
 // Function for parsing the API conf.json.
-func parseDatabaseConf() DatabaseConfig {
+func ParseDatabaseConf() DatabaseConfig {
 	jsonFile, err := os.Open("../../.conf.json")
 
 	// if we os.Open returns an error then handle it

@@ -20,20 +20,6 @@ type Race struct {
 	InsertTS    string `json:"insert_ts"`
 }
 
-// API Conf JSON Structure.
-type Conf struct {
-	DatabaseConfigs []DatabaseConfig `json:"mysqldb"`
-}
-
-// Mysql Connection JSON Structure.
-type DatabaseConfig struct {
-	Host     string `json:"DB_HOST"`
-	Port     string `json:"DB_PORT"`
-	User     string `json:"DB_USER"`
-	Password string `json:"DB_PASSWORD"`
-	Schema   string `json:"DB_SCHEMA"`
-}
-
 var dbConf DatabaseConfig
 
 // Main driver method.
