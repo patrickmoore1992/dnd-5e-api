@@ -20,11 +20,11 @@ type Race struct {
 	InsertTS    string `json:"insert_ts"`
 }
 
-var dbConf DatabaseConfig
+var dbConf conf_parsing.DatabaseConfig
 
 // Main driver method.
 func main() {
-	dbConf = parseDatabaseConf()
+	dbConf = conf_parsing.ParseDatabaseConf()
 	router := gin.Default()
 	router.GET("/races", getRaces)
 	router.GET("/races/:name", getRacesByName)
