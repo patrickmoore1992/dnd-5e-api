@@ -1,4 +1,4 @@
-module dependencies/dnd-5e-api
+module github.com/patrickmoore1992/dnd-5e-api
 
 go 1.17
 

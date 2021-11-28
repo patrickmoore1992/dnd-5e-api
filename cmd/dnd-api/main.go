@@ -10,7 +10,39 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/patrickmoore1992/dnd-5e-api/utils/conf_parsing"
 )
+
+// API Conf JSON Structure.
+type Conf struct {
+	DatabaseConfigs []DatabaseConfig `json:"mysqldb"`
+}
+
+// Mysql Connection JSON Structure.
+type DatabaseConfig struct {
+	Host     string `json:"DB_HOST"`
+	Port     string `json:"DB_PORT"`
+	User     string `json:"DB_USER"`
+	Password string `json:"DB_PASSWORD"`
+	Schema   string `json:"DB_SCHEMA"`
+}
+
+// Function for parsing the API conf.json.
+func ParseDatabaseConf() DatabaseConfig {
+	jsonFile, err := os.Open("../../.conf.json")
+
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// Parse DatabaseConfig object out of conf.json
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var conf Conf
+	json.Unmarshal(byteValue, &conf)
+	return conf.DatabaseConfigs[0]
+}
 
 // album represents data about a record album.
 type Race struct {
@@ -20,11 +52,11 @@ type Race struct {
 	InsertTS    string `json:"insert_ts"`
 }
 
-var dbConf conf_parsing.DatabaseConfig
+var dbConf DatabaseConfig
 
 // Main driver method.
 func main() {
-	dbConf = conf_parsing.ParseDatabaseConf()
+	dbConf = ParseDatabaseConf()
 	router := gin.Default()
 	router.GET("/races", getRaces)
 	router.GET("/races/:name", getRacesByName)
